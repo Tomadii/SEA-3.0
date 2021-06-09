@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@1,900&display=swap');
+
+body {
+   
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Alegreya', serif;
+}
+
+table {
+    width: 98%;
+    margin: 1%;
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+tr {
+    border: 2px solid #0000ff
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border: 2px solid #0000ff
+}
+
+th {
+    font-size: larger;
+}
+
+img {
+    height: 3.5rem;
+    padding: 2px;
+    display: inherit;
+}
+
+.pic {
+    padding: 0px;
+    width: 1%;
+    height: 1%;
+}
