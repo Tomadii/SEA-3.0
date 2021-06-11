@@ -1,5 +1,3 @@
-// 'use strict';
-
 function getJson(file) {
     return file.json();
 }
@@ -30,7 +28,67 @@ function getIcon(anrede) {
     }
 }
 
-var cell = document.getElementById("id4712");
+function add() {
+    document.getElementById("table")
+    .insertAdjacentHTML("beforeend",
+        "<form>" +
+        "<label for='fname'>First name:</label><br>" + 
+        "<input type='text' id='fname' name='fname'><br>" +
+        "<label for='lname'>Last name:</label><br>" +
+        "<input type='text' id='lname' name='lname'>" +
+        "<label for='salut'>Salutation:</label><br>" +
+        "<input type='text' id='salut' name='salut'><br>" +
+        "<input type='submit' onclick='test()' value='Submit'>" +
+        "</form>"
+    )
+}
+
+function test() {
+    alert("Test");
+}
+
+// function getQueryVariable(variable) {
+// 	var query = window.location.search.substring(1);
+// 	console.log("Query anzeigen: " + query);  //fname=FN&lname=LN&salut=ST
+// 	var vars = query.split("&");              //  trennung nach &
+// 	for (var i = 0; i < vars.length; i++) {   //  fname=FN    lname=LN   salut=ST
+// 		var pair = vars[i].split("=");        //  trennung nach = 
+// 		console.log("Vars i: " + vars[i]);    //  fname=FN    lname=LN   salut=ST
+//  		console.log("pair: " + pair[0]);      // fname
+// 	 	console.log("pair: " + pair[1]);      // FN
+// 		if (pair[0] == variable) { return pair[1]; }
+// 	}
+// 	return (false);
+// }
+
+function onInputClick(event) {
+    event.preventDefault();             // verhindet den Standart aufruf. (POST/GET)
+    console.log("click onInputClick");  
+    
+    var anrede = document.getElementById("anrede").value;
+        console.log(anrede);
+    var vorname = document.getElementById("vorname").value;
+        console.log(vorname);
+    var nachname = document.getElementById("nachname").value;
+        console.log(nachname);
+
+    var jsondata =`{ "anrede": "${anrede}", "vorname": "${vorname}", "nachname": "${nachname}" } `;
+    console.log(jsondata);
+
+    fetch("http://localhost:8080/submitPerson.json", {
+        method: 'POST', 
+        body: jsondata,
+        // headers: {
+        //     'Content-Type': 'application/json',
+        // }
+    });
+}
+
 fetch("http://localhost:8080/personen.json")
     .then(getJson)
     .then(fileToText);
+
+
+document.getElementById("test").addEventListener("click", test);
+
+document.getElementById("submit").addEventListener("click", onInputClick);

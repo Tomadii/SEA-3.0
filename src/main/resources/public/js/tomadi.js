@@ -6,5 +6,5 @@ document.getElementById("head").insertAdjacentHTML("beforeend",
     "<link rel='stylesheet' href='css/tomadi.css'>" 
 )
 
-var para = document.getElementById("id4711");
-para.textContent = "Hier kommt ein Skript";
+// var para = document.getElementById("id4711");
+// para.textContent = "Hier kommt ein Skript";
