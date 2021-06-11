@@ -7,14 +7,14 @@
             "nachname": "Paulsen"    
         },
         {
-            "anrede": "Herr",
-            "vorname": "Paul",
-            "nachname": "Paulsen"    
+            "anrede": "Frau",
+            "vorname": "Eva",
+            "nachname": "Müller"    
         },
         {
-            "anrede": "Herr",
-            "vorname": "Paul",
-            "nachname": "Paulsen"    
+            "anrede": "Divers",
+            "vorname": "Uwe",
+            "nachname": "Schmitz"    
         }
     ]
 }
