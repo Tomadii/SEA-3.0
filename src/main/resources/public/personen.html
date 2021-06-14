@@ -1,36 +1,33 @@
 <!DOCTYPE html>
-<html>
-    <head>
+<html lang="de">
+    <head id="head">
         <title>Personen Tabelle</title>
-        <link rel="stylesheet" href="css/tomadi.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <script src="js/tomadi.js" type="module"></script>
+        <script src="js/personen.js" type="module"></script>
     </head>
     <body>
         <h1>Personenliste</h1>
-        <table>
+        <table id="table">
             <tr>
                 <th></th>
                 <th>Anrede</th>
                 <th>Vorname</th>
                 <th>Nachname</th>
             </tr>
-            <tr>
-                <td class="pic"><img src="images/mann.png" alt="Mann"></td>
-                <td>Herr</td>
-                <td>Mark</td>
-                <td>Otto</td>
-            </tr>
-            <tr>
-                <td class="pic"><img src="images/mann.png" alt="Mann"></td>
-                <td>Herr</td>
-                <td>Jacob</td>
-                <td>Thornton</td>
-            </tr>
-            <tr>
-                <td class="pic"><img src="images/frau.webp" alt="Frau"></td>
-                <td>Frau</td>
-                <td>Eva</td>
-                <td>Schmitz</td>
-            </tr>
         </table>
+        <hr>
+        <form>
+            <label for='anrede'>Anrede:</label><br>
+            <input type='text' id='anrede' name='anrede'><br>
+            <label for='vorname'>Vorname:</label><br>
+            <input type='text' id='vorname' name='vorname'><br>
+            <label for='nachname'>Nachname:</label><br>
+            <input type='text' id='nachname' name='nachname'><br>
+            <input id='submit' type='submit' value='Submit'>
+        </form>
+        <!-- <button id="add" type="button">Hinzufügen</button> -->
+        <button id="test" type="button">Test</button>
     </body>
 </html>
