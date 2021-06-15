@@ -75,16 +75,16 @@ function onInputClick(event) {
     var jsondata =`{ "anrede": "${anrede}", "vorname": "${vorname}", "nachname": "${nachname}" } `;
     console.log(jsondata);
 
-    fetch("http://localhost:8080/submitPerson.json", {
+    fetch("http://localhost:8080/json/person", {
         method: 'POST', 
         body: jsondata,
-        // headers: {
-        //     'Content-Type': 'application/json',
-        // }
+        headers: {
+            'Content-Type': 'application/json',
+        }
     });
 }
 
-fetch("http://localhost:8080/personen.json")
+fetch("http://localhost:8080/json/persons/all")
     .then(getJson)
     .then(fileToText);
 
