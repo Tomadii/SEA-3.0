@@ -31,7 +31,6 @@ th {
 }
 
 img {
-    height: 3.5rem;
     padding: 2px;
     display: inherit;
 }
@@ -40,4 +39,12 @@ img {
     padding: 0px;
     width: 1%;
     height: 1%;
+}
+
+.pic img {
+    height: 3.5rem;
+}
+
+.edit img {
+    height: 1rem;
 }

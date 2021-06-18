@@ -3,15 +3,17 @@ function getJson(file) {
 }
 
 function fileToText(myjson) {
-    var tabelle = document.getElementById("table");
+    var tablebody = document.getElementById("tablebody");
     for (var i of myjson.personen) {
-        tabelle.insertAdjacentHTML("beforeend",
+        tablebody.insertAdjacentHTML("beforeend",
         "<tr>" +
+        "<td class='edit'><button id='test' type='button' onclick='test()'><img src='images/delete.png' alt='delete'></button></td>" + 
         "<td class='pic'>" + getIcon(i.anrede) + "</td>" + 
+        "<td>" + i.id + "</td>" +
         "<td>" + i.anrede + "</td>" +
         "<td>" + i.vorname + "</td>" +
         "<td>" + i.nachname + "</td>" +
-        "</tr>")
+        "</tr>");
     }
 }
 
@@ -74,21 +76,51 @@ function onInputClick(event) {
 
     var jsondata =`{ "anrede": "${anrede}", "vorname": "${vorname}", "nachname": "${nachname}" } `;
     console.log(jsondata);
+    writeJsondata(jsondata);
+    refreshTable();
+}
 
-    fetch("http://localhost:8080/json/person", {
+function writeJsondata(jsondata) {
+    console.log("start writeJsondata");
+    fetch("/json/person", {
         method: 'POST', 
         body: jsondata,
         headers: {
             'Content-Type': 'application/json',
-        }
+        },
     });
 }
 
-fetch("http://localhost:8080/json/persons/all")
-    .then(getJson)
-    .then(fileToText);
+function addTestdaten() {
+    var jsondata1 =`{ "anrede": "Herr", "vorname": "Kristian", "nachname": "Stoll" }`;
+    var jsondata2 =`{ "anrede": "Frau", "vorname": "Carola", "nachname": "Graf" }`;
+    var jsondata3 =`{ "anrede": "Divers", "vorname": "Tanja", "nachname": "Schmitz" }`;
+    writeJsondata(jsondata1)
+    .then(writeJsondata(jsondata2)
+    .then(writeJsondata(jsondata3)
+    .then(refreshTable())));
+}
 
+function del() {
+    fetch("/json/persondel/5", {
+        method: "DELETE",
+    })
+    refreshTable();
+}
 
-document.getElementById("test").addEventListener("click", test);
+function refreshTable() {
+    document.getElementById("tablebody").innerHTML = "";
+    fetch("/json/persons/all")
+        .then(getJson)
+        .then(fileToText);
+}
+
+refreshTable();
+
+// document.getElementById("test").addEventListener("click", test);
 
 document.getElementById("submit").addEventListener("click", onInputClick);
+
+document.getElementById("testdaten").addEventListener("click", addTestdaten);
+
+document.getElementById("del").addEventListener("click", del);
