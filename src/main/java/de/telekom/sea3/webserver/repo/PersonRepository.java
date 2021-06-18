@@ -28,4 +28,15 @@ public class PersonRepository {
 	public List<Person> getAll() {
 		return personen;
 	}
+	
+	public boolean remove(int id) {
+		for (int i=0; i<personen.size(); i++) {
+			if (id == personen.get(i).getId()) {
+				personen.remove(i);
+				return true;
+			}
+		}
+		return false;
+	}
+	
 }

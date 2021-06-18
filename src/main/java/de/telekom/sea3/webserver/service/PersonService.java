@@ -19,7 +19,7 @@ public class PersonService {
 		this.personRepository = personRepository;
 	}
 	
-	public int getSize() {
+	public Integer getSize() {
 		return personRepository.getSize();
 	}
 	
@@ -34,5 +34,9 @@ public class PersonService {
 	public Person add(Person person) {
 		personRepository.add(person);
 		return person;
+	}
+	
+	public boolean remove(int id) {
+		return personRepository.remove(id);
 	}
 }

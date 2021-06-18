@@ -2,17 +2,13 @@ package de.telekom.sea3.webserver.view;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import de.telekom.sea3.webserver.service.PersonService;
 
 @Controller
 public class PersonHtmlController {
-
-	private static final String HTMLTEMPLATE = "<!DOCTYPE html> <html lang='de'> "
-			+ "<head> <meta charset='utf-8'> <meta name='viewport' content='width=device-width, initial-scale=1.0'> <title>%s</title> </head> "
-			+ "<body><p>size: %d</p></body></html>";
 	
 	private PersonService personService;
 
@@ -25,10 +21,22 @@ public class PersonHtmlController {
 	
 	// URL:"http://localhost:8080/size"
 	@GetMapping("/size")
-	@ResponseBody
-	public String getSize() {
+	public String getSize(Model model) {
+		
 		String title = "Size";
-		return String.format(HTMLTEMPLATE, title, personService.getSize());
+		String size = personService.getSize().toString();
+		
+		model.addAttribute("title", title);
+		model.addAttribute("size", size);
+		
+		return "size";
+	}
+
+	@GetMapping("/personen")
+	public String personen(Model model) {
+		model.addAttribute("personen", personService.getAllPersons().getPersonen());
+		
+		return "personen";
 	}
 	
 }
