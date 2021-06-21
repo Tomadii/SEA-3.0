@@ -47,4 +47,5 @@ img {
 
 .edit img {
     height: 1rem;
+    display: inline;
 }

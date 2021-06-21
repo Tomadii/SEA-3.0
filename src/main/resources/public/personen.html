@@ -10,18 +10,38 @@
     <body>
         <h1>Personenliste</h1>
         <table id="table">
-            <tr>
-                <th></th>
-                <th></th>
-                <th>ID</th>
-                <th>Anrede</th>
-                <th>Vorname</th>
-                <th>Nachname</th>
-            </tr>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th></th>
+                    <th>Anrede</th>
+                    <th>Vorname</th>
+                    <th>Nachname</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th><button>Filter setzen</button></th>
+                </tr>
+            </thead>
             <tbody id="tablebody">
             </tbody>
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td><input type='text' id='anrede' name='anrede'></td>
+                    <td><input type='text' id='vorname' name='vorname'></td>
+                    <td><input type='text' id='nachname' name='nachname'></td>
+                    <td><button>Person hinzufügen</button></td>
+                </tr>
+            </tfoot>
         </table>
-        <hr>
+        <!-- <hr>
         <form>
             <label for='anrede'>Anrede:</label><br>
             <input type='text' id='anrede' name='anrede'><br>
@@ -30,7 +50,7 @@
             <label for='nachname'>Nachname:</label><br>
             <input type='text' id='nachname' name='nachname'><br>
             <input id='submit' type='submit' value='Submit'>
-        </form>
+        </form> -->
         <!-- <button id="add" type="button">Hinzufügen</button> -->
         <!-- <button id="test" type="button">Test</button> -->
         <button id="testdaten" type="button">Testdaten Hinzufügen</button>

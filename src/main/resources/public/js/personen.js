@@ -7,12 +7,15 @@ function fileToText(myjson) {
     for (var i of myjson.personen) {
         tablebody.insertAdjacentHTML("beforeend",
         "<tr>" +
-        "<td class='edit'><button id='test' type='button' onclick='test()'><img src='images/delete.png' alt='delete'></button></td>" + 
-        "<td class='pic'>" + getIcon(i.anrede) + "</td>" + 
         "<td>" + i.id + "</td>" +
+        "<td class='pic'>" + getIcon(i.anrede) + "</td>" + 
         "<td>" + i.anrede + "</td>" +
         "<td>" + i.vorname + "</td>" +
         "<td>" + i.nachname + "</td>" +
+        "<td>" +
+        "<span class='edit'><button id='test' type='button' onclick='test()'><img src='images/delete.png' alt='Delete'></button></span>" + 
+        "<span class='edit'><button id='test2' type='button' onclick='test()'><img src='images/Edit.svg' alt='Edit'></button></span>" +
+        "</td>" + 
         "</tr>");
     }
 }
@@ -95,10 +98,10 @@ function addTestdaten() {
     var jsondata1 =`{ "anrede": "Herr", "vorname": "Kristian", "nachname": "Stoll" }`;
     var jsondata2 =`{ "anrede": "Frau", "vorname": "Carola", "nachname": "Graf" }`;
     var jsondata3 =`{ "anrede": "Divers", "vorname": "Tanja", "nachname": "Schmitz" }`;
-    writeJsondata(jsondata1)
-    .then(writeJsondata(jsondata2)
-    .then(writeJsondata(jsondata3)
-    .then(refreshTable())));
+    writeJsondata(jsondata1);
+    writeJsondata(jsondata2);
+    writeJsondata(jsondata3);
+    refreshTable();
 }
 
 function del() {
@@ -119,7 +122,7 @@ refreshTable();
 
 // document.getElementById("test").addEventListener("click", test);
 
-document.getElementById("submit").addEventListener("click", onInputClick);
+// document.getElementById("submit").addEventListener("click", onInputClick);
 
 document.getElementById("testdaten").addEventListener("click", addTestdaten);
 
