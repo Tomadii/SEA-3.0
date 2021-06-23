@@ -1,42 +1,92 @@
 package de.telekom.sea3.webserver.modul;
 
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Version;
+
+import de.telekom.sea3.webserver.looup.Salutation;
+
+@Entity
+@Table(name="persons")
 public class Person {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 	
-	private static int index = 1;
+	@Column
+	private Salutation salutation;
 	
-	private String anrede;
-	private String vorname;
-	private String nachname;
-	private int id;
+	@Column 
+	private String firstname;
 	
-	public Person(String anrede, String vorname, String nachname) {
-		id = index++;
-		this.anrede = anrede;
-		this.vorname = vorname;
-		this.nachname = nachname;
-	}
-		
-	public int getId() {
-		return id;
+	@Column 
+	private String lastname;
+	
+	@Column
+	private LocalDate birthdate;
+	
+	@Version
+	private Long version;
+	
+	public Person(String salutation, String firstname, String lastname) {
+		this.salutation = Salutation.fromString(salutation);
+		this.firstname = firstname;
+		this.lastname = lastname;
 	}
 
-	public String getAnrede() {
-		return anrede;
+	public Person() {
+		
 	}
-	public void setAnrede(String anrede) {
-		this.anrede = anrede;
+
+	public Long getId() {
+		return id;
 	}
-	public String getVorname() {
-		return vorname;
+	
+	public String getSalutation() {
+		return salutation.toString();
 	}
-	public void setVorname(String vorname) {
-		this.vorname = vorname;
+
+	public void setSalutation(String salutation) {
+		this.salutation = Salutation.fromString(salutation);
 	}
-	public String getNachname() {
-		return nachname;
+
+	public String getFirstname() {
+		return firstname;
 	}
-	public void setNachname(String nachname) {
-		this.nachname = nachname;
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+
+	public LocalDate getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(LocalDate birthdate) {
+		this.birthdate = birthdate;
+	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 	
 }

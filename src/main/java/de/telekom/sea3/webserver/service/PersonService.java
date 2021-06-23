@@ -1,5 +1,7 @@
 package de.telekom.sea3.webserver.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,28 +17,33 @@ public class PersonService {
 	@Autowired
 	public PersonService(PersonRepository personRepository) {
 		super();
-		System.out.println("PersonService instanziert: " + this.toString());
 		this.personRepository = personRepository;
 	}
 	
-	public Integer getSize() {
-		return personRepository.getSize();
+	public Long getSize() {
+		return personRepository.count();
 	}
 	
 	public Personen getAllPersons() {
-		return new Personen(personRepository.getAll());
+		return new Personen(personRepository.findAll());
 	}
 	
-	public Person get(int id) {
-		return new Person("Herr", "Paul", "Paulsen");
+	public Optional<Person> get(Long id) {
+		return personRepository.findById(id);
+		
 	}
 
 	public Person add(Person person) {
-		personRepository.add(person);
+		personRepository.save(person);
 		return person;
 	}
 	
-	public boolean remove(int id) {
-		return personRepository.remove(id);
+	public void remove(Long id) {
+		personRepository.deleteById(id);
 	}
+	
+//	public Person update(Person person) {
+//		personRepository.
+//	}
+	
 }
