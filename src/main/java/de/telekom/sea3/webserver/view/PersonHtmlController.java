@@ -15,7 +15,6 @@ public class PersonHtmlController {
 	@Autowired
 	public PersonHtmlController(PersonService personService) {
 		super();
-		System.out.println("PersonController instanziert: " + this.toString());
 		this.personService = personService;
 	}
 	
