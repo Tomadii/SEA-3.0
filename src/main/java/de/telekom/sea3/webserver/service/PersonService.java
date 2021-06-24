@@ -48,8 +48,15 @@ public class PersonService {
 	
 	public Person update(Person person) {
 		logger.info("PersonService Person update");
-		personRepository.save(person);
-		return null;
+		return personRepository.save(person);
+	}
+	
+	public Personen selectPersonen() {
+		Personen personen = new Personen();
+		for (Person person : personRepository.selectPersonen()) {
+			personen.getPersonen().add(person);
+		}
+		return personen;
 	}
 	
 }

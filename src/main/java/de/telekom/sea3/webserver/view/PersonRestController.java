@@ -63,4 +63,9 @@ public class PersonRestController {
 		return personService.update(person);
 	}
 
+	@GetMapping("json/selectPersons")
+	public Personen search() {
+		Personen personen = personService.selectPersonen();
+		return personen;
+	}
 }
