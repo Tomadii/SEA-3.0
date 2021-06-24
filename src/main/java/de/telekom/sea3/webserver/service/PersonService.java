@@ -2,6 +2,8 @@ package de.telekom.sea3.webserver.service;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import de.telekom.sea3.webserver.repo.PersonRepository;
 public class PersonService {
 
 	private PersonRepository personRepository;
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	public PersonService(PersonRepository personRepository) {
@@ -42,8 +46,17 @@ public class PersonService {
 		personRepository.deleteById(id);
 	}
 	
-//	public Person update(Person person) {
-//		personRepository.
-//	}
+	public Person update(Person person) {
+		logger.info("PersonService Person update");
+		return personRepository.save(person);
+	}
+	
+	public Personen selectPersonen() {
+		Personen personen = new Personen();
+		for (Person person : personRepository.selectPersonen()) {
+			personen.getPersonen().add(person);
+		}
+		return personen;
+	}
 	
 }

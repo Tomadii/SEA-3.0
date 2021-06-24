@@ -68,15 +68,6 @@ function writeJsondata(jsondata) {
     .then(addPerson);
 }
 
-function addTestdaten() {
-    var jsondata1 =`{ "salutation": "Herr", "firstname": "Kristian", "lastname": "Stoll" }`;
-    // var jsondata2 =`{ "anrede": "Frau", "vorname": "Carola", "nachname": "Graf" }`;
-    // var jsondata3 =`{ "anrede": "Divers", "vorname": "Tanja", "nachname": "Schmitz" }`;
-    writeJsondata(jsondata1);
-    // writeJsondata(jsondata2);
-    // writeJsondata(jsondata3);
-}
-
 function deletePerson(id) {
     console.log(`Start delete ${id}`);
     var url = `/json/persondel/${id}`
@@ -95,25 +86,45 @@ function edit(id) {
 
 function modify(myjson) {
     var editid = document.getElementById(`edit${myjson.id}`);
+    var id = myjson.id;
+    var version = myjson.version;
     editid.innerHTML = "";
     editid.insertAdjacentHTML("beforeend",
         `<form>` +
             `<td> ${myjson.id} </td>` +
             `<td class='pic'> ${getIcon(myjson.salutation)} </td>` + 
-            `<td><input type='text' id='salutation' name='salutation' value='${myjson.salutation}'></td>` + 
+            `<td id="salutInsert"></td>` + 
             `<td><input type='text' id='firstname' name='firstname' value='${myjson.firstname}'></td>` + 
             `<td><input type='text' id='lastname' name='lastname' value='${myjson.lastname}'></td>` +
             `<td><input type='date' id='birthdate' name='birthdate' value='${myjson.birthdate}'></td>` +
-            `<td><input type='text' id='version' name='version' value='${myjson.version}'></td>` +
+            `<td> ${myjson.version} </td>` +
             `<td>` +
-                `<button type='submit' onclick='update()' value='Update'>Person aktualisieren</button>` +
+                `<button id='update' type='submit' onclick='update(${id}, ${version})' value='${myjson.id}'>Person aktualisieren</button>` +
                 `<button type='button' onclick='abort()'><img class='icon' src='images/abort.png' alt='Abort'></button>` +
             `</td>` +
         `</form>`
     );
+    salutation(myjson.salutation);
 }
 
-function update() {
+function salutation(salutation) {
+
+    var selectedFrau = (salutation==="Frau")?"selected": "";
+    var selectedHerr = (salutation==="Herr")?"selected": "";
+    var selectedDivers = (salutation==="Divers")?"selected": "";
+    var selectedNN = (salutation==="NN")?"selected": "";
+
+    document.getElementById("salutInsert").insertAdjacentHTML("afterbegin",
+        `<select name='salutation' id='salutation'>` +
+            `<option value="Frau" ${selectedFrau}>Frau</option>` +
+            `<option value="Herr" ${selectedHerr}>Herr</option>` +
+            `<option value="Divers" ${selectedDivers}>Divers</option>` +
+            `<option value="NN" ${selectedNN}>NN</option>` +
+        `</select>`
+    );
+}
+
+function update(id, version) {
     console.log("Start update")
 
     var salutation = document.getElementById("salutation").value;
@@ -124,13 +135,18 @@ function update() {
         console.log(lastname);
     var birthdate = document.getElementById("birthdate").value;
         console.log(birthdate);
-    var version = document.getElementById("version").value;
-        console.log(version);
 
-    var jsondata =`{ "salutation": "${salutation}", "firstname": "${firstname}", "lastname": "${lastname}", "birthdate": "${birthdate}", "version": "${version}" } `;
+    var jsondata =`{ "id": ${id}, "salutation": "${salutation}", "firstname": "${firstname}", "lastname": "${lastname}", "birthdate": "${birthdate}", "version": ${version} } `;
     console.log(jsondata);
 
-    refreshTable();
+    fetch(`/json/update/person`, {
+        method: 'PUT', 
+        body: jsondata,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(refreshTable)
 }
 
 function refreshTable() {
@@ -168,8 +184,8 @@ function tablehead() {
             `<th>Vorname</th>` +
             `<th>Nachname</th>` +
             `<th>Geburtsdatum</th>` +
-            `<th>Version</th>` +
-            `<th><button id="filter" type="button">Filter</button></th>` +
+            `<th class="editshow">Version</th>` +
+            `<th class="editshow"><button id="filter" type="button" onclick="filter()">Filter</button></th>` +
         `</tr>`
     )
 }
@@ -200,20 +216,28 @@ function addPerson() {
                 `<td><input type='text' id='lastname' name='lastname'></td>` +
                 `<td><input type='date' id='birthdate' name='birthdate'></td>` +
                 `<td></td>` +
-                `<td><button id='submit' type='submit' value="Submit">Person hinzufügen</button></td>` +
+                `<td>` +
+                    `<button id='submit' type='submit' value="Submit" onclick="inInputClick()">Person hinzufügen</button>` +
+                    `<button type='button' onclick='abortAddPerson()'><img class='icon' src='images/abort.png' alt='Abort'></button>` +
+                `</td>` +
             `</form>` +
         `</tr>`
     )
 }
 
+function abortAddPerson() {
+    document.getElementById("tablefoot").innerHTML = "";
+}
+
+function editshow(show) {
+    document.getElementsByClassName("editshow").style.display = "none";
+}
+
 tablehead();
 refreshTable();
-addPerson();
-
-document.getElementById("submit").addEventListener("click", onInputClick);
-
-document.getElementById("testdaten").addEventListener("click", addTestdaten);
 
 document.getElementById("refresh").addEventListener("click", refreshTable);
 
-document.getElementById("filter").addEventListener("click", filter);
+document.getElementById("addPerson").addEventListener("click", addPerson);
+
+document.getElementById("editshow").addEventListener("click", editshow);

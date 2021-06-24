@@ -10,6 +10,10 @@ public class Personen {
 	public Personen(Iterable<Person> iterable) {
 		this.personen = (List<Person>) iterable;
 	}
+	
+	public Personen() {
+		
+	}
 
 	public List<Person> getPersonen() {
 		return personen;
