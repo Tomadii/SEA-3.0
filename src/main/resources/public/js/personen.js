@@ -108,47 +108,20 @@ function modify(myjson) {
 }
 
 function salutation(salutation) {
-    switch(salutation) {
-        case "Frau":
-            document.getElementById("salutInsert").insertAdjacentHTML("afterbegin",
-                `<select name='salutation' id='salutation'>` +
-                    `<option value="Frau" selected>Frau</option>` +
-                    `<option value="Herr">Herr</option>` +
-                    `<option value="Divers">Divers</option>` +
-                    `<option value="NN">NN</option>` +
-                `</select>`
-            );
-            break;
-        case "Herr":
-            document.getElementById("salutInsert").insertAdjacentHTML("afterbegin",
-                `<select name='salutation' id='salutation'>` +
-                    `<option value="Frau">Frau</option>` +
-                    `<option value="Herr" selected>Herr</option>` +
-                    `<option value="Divers">Divers</option>` +
-                    `<option value="NN">NN</option>` +
-                `</select>` 
-            );
-            break;
-        case "Divers":
-            document.getElementById("salutInsert").insertAdjacentHTML("afterbegin",
-                `<select name='salutation' id='salutation'>` +
-                    `<option value="Frau">Frau</option>` +
-                    `<option value="Herr">Herr</option>` +
-                    `<option value="Divers" selected>Divers</option>` +
-                    `<option value="NN">NN</option>` +
-                `</select>`
-            );
-            break;
-        default:
-            document.getElementById("salutInsert").insertAdjacentHTML("afterbegin",
-                `<select name='salutation' id='salutation'>` +
-                    `<option value="Frau">Frau</option>` +
-                    `<option value="Herr">Herr</option>` +
-                    `<option value="Divers">Divers</option>` +
-                    `<option value="NN" selected>NN</option>` +
-                `</select>`
-            );
-    }                        
+
+    var selectedFrau = (salutation==="Frau")?"selected": "";
+    var selectedHerr = (salutation==="Herr")?"selected": "";
+    var selectedDivers = (salutation==="Divers")?"selected": "";
+    var selectedNN = (salutation==="NN")?"selected": "";
+
+    document.getElementById("salutInsert").insertAdjacentHTML("afterbegin",
+        `<select name='salutation' id='salutation'>` +
+            `<option value="Frau" ${selectedFrau}>Frau</option>` +
+            `<option value="Herr" ${selectedHerr}>Herr</option>` +
+            `<option value="Divers" ${selectedDivers}>Divers</option>` +
+            `<option value="NN" ${selectedNN}>NN</option>` +
+        `</select>`
+    );
 }
 
 function update(id, version) {
@@ -211,8 +184,8 @@ function tablehead() {
             `<th>Vorname</th>` +
             `<th>Nachname</th>` +
             `<th>Geburtsdatum</th>` +
-            `<th>Version</th>` +
-            `<th><button id="filter" type="button" onclick="filter()">Filter</button></th>` +
+            `<th class="editshow">Version</th>` +
+            `<th class="editshow"><button id="filter" type="button" onclick="filter()">Filter</button></th>` +
         `</tr>`
     )
 }
@@ -256,9 +229,15 @@ function abortAddPerson() {
     document.getElementById("tablefoot").innerHTML = "";
 }
 
+function editshow(show) {
+    document.getElementsByClassName("editshow").style.display = "none";
+}
+
 tablehead();
 refreshTable();
 
 document.getElementById("refresh").addEventListener("click", refreshTable);
 
 document.getElementById("addPerson").addEventListener("click", addPerson);
+
+document.getElementById("editshow").addEventListener("click", editshow);
