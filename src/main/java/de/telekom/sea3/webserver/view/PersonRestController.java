@@ -2,11 +2,14 @@ package de.telekom.sea3.webserver.view;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +21,8 @@ import de.telekom.sea3.webserver.service.PersonService;
 public class PersonRestController {
 
 	private PersonService personService;
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
 	public PersonRestController(PersonService personService) {
@@ -52,9 +57,10 @@ public class PersonRestController {
 		personService.remove(id);
 	}
 	
-	@PostMapping("json/update/person")
+	@PutMapping("json/update/person")
 	public Person update(@RequestBody Person person) {
-		return person;
+		logger.info("PersonRestController Person update");
+		return personService.update(person);
 	}
 
 }
